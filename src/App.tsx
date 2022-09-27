@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Room from './Room';
 
 function App() {
+  const [name, setName] = useState<string>();
+  const [isConnect, setConnect] = useState<boolean>(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header>Chat</header>
+      <label htmlFor="name">暱稱</label>
+      <input
+        id="name"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.currentTarget.value)}
+        disabled={isConnect}
+        style={{ margin: 10 }}
+      ></input>
+      <button
+        onClick={() => {
+          name && setConnect(!isConnect);
+        }}
+      >
+        {isConnect ? 'Disconnect' : 'Connect'}
+      </button>
+      {isConnect ? <Room name={name} /> : null}
     </div>
   );
 }
